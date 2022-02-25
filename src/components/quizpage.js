@@ -31,9 +31,8 @@ const Quizpage = () => {
       <Question
         key={index}
         questions={item.question}
-        key={id}
-        id={id}
         answers={answers}
+        correct_answer={item.correct_answer}
       />
     );
   });

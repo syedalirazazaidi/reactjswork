@@ -1,27 +1,42 @@
 import React from "react";
-
+import "./styles.css";
 import { nanoid } from "nanoid";
-const Question = ({ questions, answers }) => {
+import ScoreCard from "./score";
+const Question = ({ questions, answers, correct_answer }) => {
+  var btnStyle = {
+    margin: "10px",
+    backgroundColor: "#F5F7FB",
+    borderRadius: "15px",
+    padding: "15px 10px",
+    border: "1px solid #293264",
+    cursor: "pointer",
+  };
+  console.log(correct_answer);
+  const [score, setScore] = React.useState(0);
+  const [selected, setSelect] = React.useState();
+  const [checking, setChecking] = React.useState(true);
+  const [disable, setDisable] = React.useState(false);
   let id = nanoid();
 
-  const markAnswer = (e) => {
-    const anse = e.target.value;
-    console.log(anse);
+  const styles = { backgroundColor: checking ? "orange" : "grey" };
+
+  const markAnswer = (i) => {
+    btnStyle = {
+      backgroundColor: "black",
+    };
+
+    // if ( newValue.le? setScore((prev) => prev++) : setScore(score));
+    if (i === correct_answer) {
+      setScore((prev) => prev++);
+      //setChecking(!checking);
+    } else {
+      setScore(score);
+    }
   };
-  const allanswer = answers.map((i) => {
+  console.log(score, "-------------------");
+  const allanswer = answers.map((i, index) => {
     return (
-      <button
-        key={id}
-        style={{
-          margin: "10px",
-          backgroundColor: "#F5F7FB",
-          borderRadius: "15px",
-          padding: "5px 10px",
-          border: "1px solid #293264",
-          cursor: "pointer",
-        }}
-        onClick={markAnswer}
-      >
+      <button style={btnStyle} onClick={() => markAnswer(i)} key={index}>
         {i}
       </button>
     );
@@ -46,6 +61,7 @@ const Question = ({ questions, answers }) => {
           margin: "0 auto",
           display: "flex",
           justifyContent: "center",
+          textOverflow: "ellipsis",
         }}
       >
         {" "}
@@ -53,6 +69,8 @@ const Question = ({ questions, answers }) => {
       </p>
 
       <hr />
+      {/* {score} */}
+      {/* <ScoreCard score={score} /> */}
     </div>
   );
 };
